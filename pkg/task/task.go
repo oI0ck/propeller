@@ -207,6 +207,7 @@ type Task struct {
 	Priority          int                        `json:"priority,omitempty"`
 	Metadata          Metadata                   `json:"metadata,omitempty"`
 	HalStoragePath    *string                    `json:"hal_storage_path,omitempty"`
+	HeapSize          int                        `json:"heap_size,omitempty"`
 }
 
 // ElasticConfig returns the reserved MetadataElasticKey sub-map, or nil when the

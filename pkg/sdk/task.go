@@ -40,6 +40,7 @@ type Task struct {
 	Schedule        string         `json:"schedule,omitempty"`
 	Timezone        string         `json:"timezone,omitempty"`
 	IsRecurring     bool           `json:"is_recurring,omitempty"`
+	HeapSize        int            `json:"heap_size,omitempty"`
 	Metadata        map[string]any `json:"metadata,omitempty"`
 	StartTime       time.Time      `json:"start_time"`
 	FinishTime      time.Time      `json:"finish_time"`

@@ -44,6 +44,7 @@ type taskFlags struct {
 	schedule        string
 	timezone        string
 	isRecurring     bool
+	heapSize        int
 	metadata        []string
 	wasiSecurity    string
 	wasiPEP         string
@@ -66,6 +67,7 @@ func registerTaskFlags(cmd *cobra.Command, tf *taskFlags) {
 	cmd.Flags().StringVar(&tf.schedule, "schedule", "", "Cron expression for scheduled tasks")
 	cmd.Flags().StringVar(&tf.timezone, "timezone", "", "Timezone for scheduled tasks (default UTC)")
 	cmd.Flags().BoolVar(&tf.isRecurring, "is-recurring", false, "Re-run according to schedule")
+	cmd.Flags().IntVar(&tf.heapSize, "heap-size", 0, "Set default heap size")
 	cmd.Flags().StringSliceVar(&tf.metadata, "metadata", nil, "Metadata KEY=VALUE (comma-separated or repeatable)")
 	cmd.Flags().StringVar(&tf.wasiSecurity, "wasi-security", "", "Path to a TOML WASI security policy applied to the task's Wasmtime sandbox (stored under metadata."+task.MetadataElasticKey+")")
 	cmd.Flags().StringVar(&tf.wasiPEP, "wasi-pep", "", "WASI policy enforcement point reference (stored under metadata."+task.MetadataElasticKey+")")
@@ -128,6 +130,9 @@ func taskFromFlags(cmd *cobra.Command, tf *taskFlags, id, name string) (sdk.Task
 	}
 	if f.Changed("metadata") {
 		t.Metadata = toMapAny(tf.metadata)
+	}
+	if f.Changed("heap-size") {
+		t.HeapSize = tf.heapSize
 	}
 
 	if f.Changed("wasi-security") || f.Changed("wasi-pep") {

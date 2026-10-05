@@ -2054,6 +2054,7 @@ type startPayload struct {
 	PropletID         string                     `json:"proplet_id,omitempty"`
 	HalStoragePath    *string                    `json:"hal_storage_path,omitempty"`
 	ParentResults     map[string]any             `json:"parent_results,omitempty"`
+	HeapSize          int                        `json:"heap_size,omitempty"`
 	// Metadata carries the reserved task.MetadataElasticKey sub-map, keyed
 	// generically so the wire format isn't tied to a manager-side field name.
 	// The rest of task.Metadata is intentionally excluded: it is a
@@ -2079,6 +2080,7 @@ func (svc *service) publishStart(ctx context.Context, t task.Task, propletID str
 		MonitoringProfile: t.MonitoringProfile,
 		PropletID:         propletID,
 		HalStoragePath:    t.HalStoragePath,
+		HeapSize:          t.HeapSize,
 		Metadata:          t.ElasticConfig(),
 	}
 
